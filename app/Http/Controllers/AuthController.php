@@ -17,10 +17,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Laravel\Socialite\Facades\Socialite;
 
+
 class AuthController extends Controller
 {
-    public function index(): Factory|View|Application
+    public function index(): Factory|View|Application|RedirectResponse
     {
+
         return view('auth.index');
     }
     public function signUp(): Factory|View|Application
@@ -79,10 +81,12 @@ class AuthController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
+        if($status === Password::RESET_LINK_SENT){
+            flash()->info(__($status));
 
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with(['message' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+            return back();
+        }
+        return back()->withErrors(['email' => __($status)]);
     }
 
     public function reset(string $token): Factory|View|Application
@@ -105,9 +109,12 @@ class AuthController extends Controller
                 }
             );
 
-            return $status === Password::PASSWORD_RESET
-                ? redirect()->route('login')->with('message', __($status))
-                : back()->withErrors(['email' => [__($status)]]);
+        if($status === Password::PASSWORD_RESET){
+            flash()->info(__($status));
+
+            return back();
+        }
+        return back()->withErrors(['email' => __($status)]);
     }
     public function github(): \Symfony\Component\HttpFoundation\RedirectResponse|RedirectResponse
     {
