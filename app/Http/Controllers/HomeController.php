@@ -22,10 +22,7 @@ class HomeController extends Controller
         $brands = Brand::query()
                               ->homePage()
                               ->get();
-        return view('index', compact(
-            'categories',
-            'products',
-            'brands'
+        return view('index', compact('categories','products','brands'
         ));
     }
 }
