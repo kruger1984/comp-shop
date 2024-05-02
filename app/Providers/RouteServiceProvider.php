@@ -4,14 +4,12 @@ namespace App\Providers;
 
 use App\Contracts\RouteRegistrar;
 use App\Routing\AppRegistrar;
-use Domain\Auth\Providers\AuthServiceProvider;
-use Domain\Auth\Routing\AuthRegistrar;
+use App\Routing\AuthRegistrar;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 use RuntimeException;
 
 class RouteServiceProvider extends ServiceProvider

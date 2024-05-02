@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\app\Http\Controllers;
+namespace Tests\Feature\app\Http\Controllers\Auth;
 
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Requests\SignInFormRequest;
@@ -27,7 +27,7 @@ class SignInControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function it_sign_in_success(): void
+    public function it_handle_success():void
     {
         $password = '123456789';
         $user = UserFactory::new()->create([
@@ -45,21 +45,40 @@ class SignInControllerTest extends TestCase
 
         $this->assertAuthenticatedAs($user);
     }
+    /**
+     * @test
+     * @return void
+     */
+    public function it_handle_fail():void
+    {
+        $request = SignInFormRequest::factory()->create([
+            'email' => 'notfound@mail.ru',
+            'password' => str()->random(10)
+        ]);
+        $this->post(action([SignInController::class, 'handle']), $request)->assertInvalid(['email']);
+
+        $this->assertGuest();
+    }
+    /**
+     * @test
+     * @return void
+     */
+    public function it_logout_success(): void
+    {
+        $user = UserFactory::new()->create(['email' => 'testing@mail.ru',]);
+
+        $this->actingAs($user)->delete(action([SignInController::class, 'logOut']));
+
+        $this->assertGuest();
+    }
 
     /**
      * @test
      * @return void
      */
+    public function it_logout_quest_middleware_fail(): void
+{
+    $this->delete(action([SignInController::class, 'logOut']))->assertRedirect(route('home'));
+}
 
-    public function it_logout_success(): void
-    {
-        $user = UserFactory::new()->create([
-            'email' => 'testing@mail.ru',
-        ]);
-
-        $this->actingAs($user)
-             ->delete(action([SignInController::class, 'logOut']));
-
-        $this->assertGuest();
-    }
 }

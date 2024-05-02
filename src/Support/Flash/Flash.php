@@ -15,20 +15,32 @@ final class Flash
     {
 
     }
-
     public function get(): ?FlashMessage
     {
-    $message = $this->session->get(self::MESSAGE_KEY);
+        $message = $this->session->get(self::MESSAGE_KEY);
 
-    if(!$message){
-        return null;
+        if (!$message) {
+            return null;
+        }
+
+        $class = $this->session->get(self::MESSAGE_CLASS_KEY, '');
+
+        return new FlashMessage($message, $class);
     }
 
-    return new FlashMessage(
-        $message,
-        $this->session->get(self::MESSAGE_CLASS_KEY, ''));
-
-    }
+//    public function get(): ?FlashMessage
+//    {
+//    $message = $this->session->get(self::MESSAGE_KEY);
+//
+//    if(!$message){
+//        return null;
+//    }
+//
+//    return new FlashMessage(
+//        $message,
+//        $this->session->get(self::MESSAGE_CLASS_KEY, ''));
+//
+//    }
 
     public function info(string $message): void
     {

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Connection;
+use Services\TelegramBotApi;
+use Services\TelegramBotApiContract;
+
 //use Illuminate\Database\Events\QueryExecuted;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::shouldBeStrict(!app()->isProduction());
 
+        $this->app->bind(TelegramBotApiContract::class, TelegramBotApi::class);
 
         if(app()->isProduction())
         {

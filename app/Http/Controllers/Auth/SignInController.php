@@ -10,7 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 
-class SignInController extends Controller
+class SignInController extends Controller 
 {
     public function page(): Factory|View|Application|RedirectResponse
     {

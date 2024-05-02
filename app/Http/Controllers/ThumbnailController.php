@@ -38,3 +38,5 @@ class ThumbnailController extends Controller
         return response()->file($storage->path($resultPath));
     }
 }
+
+//TODO - сделать тесты
