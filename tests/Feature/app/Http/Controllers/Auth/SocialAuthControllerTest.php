@@ -61,6 +61,7 @@ class SocialAuthControllerTest extends TestCase
     public function it_driver_not_found_exception(): void
     {
         $this->expectException(DomainException::class);
+
         $this->withoutExceptionHandling()->get(
             action(
                 [SocialAuthController::class, 'callback'],

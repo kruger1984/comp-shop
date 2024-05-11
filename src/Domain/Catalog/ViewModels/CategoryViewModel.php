@@ -14,6 +14,7 @@ final class CategoryViewModel
     use Makeable;
     public function homePage(): Collection|array
     {
+        //TODO make observer on store/update/delete clear cache
         return Cache::rememberForever('category_home_page', function (){
             return Category::query()
                            ->homepage()
