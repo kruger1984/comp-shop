@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\CatalogServiceProvider;
 use App\Providers\DomainServiceProvider;
 use App\Providers\TestingServiceProvider;
 use App\Providers\ViewServiceProvider;
@@ -185,6 +186,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
@@ -201,6 +203,7 @@ return [
         ViewServiceProvider::class,
         TestingServiceProvider::class,
         DomainServiceProvider::class,
+        CatalogServiceProvider::class,
     ],
 
     /*

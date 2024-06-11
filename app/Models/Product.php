@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Laravel\Scout\Attributes\SearchUsingFullText;
-use Laravel\Scout\Attributes\SearchUsingPrefix;
-use Laravel\Scout\Searchable;
+use Illuminate\Pipeline\Pipeline;
 use Support\Casts\PriceCast;
 use Support\Trait\Models\HasSlug;
 use Support\Trait\Models\HasThumbnail;
@@ -42,16 +40,13 @@ class Product extends Model
     }
 
 
-    public function scopeFiltered(Builder $query): void
+    public function scopeFiltered(Builder $query)
     {
-        $query->when(request('filters.brands'), function (Builder $q) {
-            $q->whereIn('brand_id', request('filters.brands'));
-        })->when(request('filters.price'), function (Builder $q) {
-            $q->whereBetween('price', [
-                request('filters.price.from', 0) * 100,
-                request('filters.price.to', 142800) * 100
-            ]);
-        });
+        return app(Pipeline::class)
+            ->send($query)
+            ->through(filters())
+//            ->via('handle')
+            ->thenReturn();
     }
 
     public function scopeSorted(Builder $query): void
@@ -81,6 +76,16 @@ class Product extends Model
     public function categories() : BelongsToMany
     {
        return $this->belongsToMany(Category::class);
+    }
+
+    public function properties(): BelongsToMany
+    {
+        return $this->belongsToMany(Property::class)->withPivot('value');
+    }
+
+    public function optionValues(): BelongsToMany
+    {
+        return $this->belongsToMany(OptionValue::class);
     }
 
 

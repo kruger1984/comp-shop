@@ -32,6 +32,7 @@ class RefreshCommand extends Command
         }
 
         Cache::flush();
+
         Storage::deleteDirectory('images/products');
         Storage::deleteDirectory('images/brands');
 
