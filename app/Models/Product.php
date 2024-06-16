@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Domain\Catalog\Facades\Sorter;
 use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -34,6 +35,7 @@ class Product extends Model
     protected $casts = [
         'price' => PriceCast::class,
     ];
+
     protected function thumbnailDir(): string
     {
         return 'products';
@@ -51,31 +53,26 @@ class Product extends Model
 
     public function scopeSorted(Builder $query): void
     {
-        $query->when(request('sort'), function (Builder $q) {
-            $column = request()->str('sort');
 
-            if($column->contains(['price', 'title'])) {
-                $direction = $column->contains('-') ? 'DESC' : 'ASC';
+        Sorter::run($query);
 
-                $q->orderBy((string) $column->remove('-'), $direction);
-            }
-        });
     }
+
     public function scopeHomepage(Builder $query): void
     {
-        $query->where('on_home_page',true)
+        $query->where('on_home_page', true)
               ->orderBy('sorting')
               ->limit(6);
     }
 
-    public function brand() : BelongsTo
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
-    public function categories() : BelongsToMany
+    public function categories(): BelongsToMany
     {
-       return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function properties(): BelongsToMany
@@ -85,7 +82,13 @@ class Product extends Model
 
     public function optionValues(): BelongsToMany
     {
-        return $this->belongsToMany(OptionValue::class);
+        return $this->belongsToMany(OptionValue::class)
+//            ->using(new class extends Pivot{
+//                use HasVvids;
+//
+//                protected $casts = [];
+//            })
+            ;
     }
 
 

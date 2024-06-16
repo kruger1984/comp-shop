@@ -11,20 +11,28 @@ class ProductController extends Controller
 {
     public function __invoke(Product $product): Factory|View|Application
     {
-
         $product->load(['optionValues.option']);
 
-//        Product::query()->whereIn('id', session()->get()); TODO
+        $also = [];
+        if(session()->has('also')){
+            $also = Product::query()->where(function ($q) use ($product) {
+                $q->whereIn('id', session('also'))
+                  ->where('id', '!=', $product->id);
+            })->get();
+        }
+
+
 
         $options = $product->optionValues->mapToGroups(function ($item) {
             return [$item->option->title => $item];
         });
 
-        session()->put('also' . $product->id, $product->id);
+        session()->put('also.' . $product->id, $product->id);
 
         return view('product.show', [
             'product' => $product,
-            'options' => $options
+            'options' => $options,
+            'also'    => $also
         ]);
     }
 }

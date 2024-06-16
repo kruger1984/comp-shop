@@ -18,7 +18,7 @@
 
                 <div class="basis-full lg:basis-2/5 xl:basis-2/4">
                     <div class="overflow-hidden h-auto max-h-[620px] lg:h-[480px] xl:h-[620px] rounded-3xl">
-                        <img src="{{ $product->makeThumbnail('345x320') }}" class="object-cover w-full h-full" alt="SteelSeries Aerox 3 Snow">
+                        <img src="{{ $product->makeThumbnail('345x320') }}" class="object-cover w-full h-full" alt="{{ $product->title }}">
                     </div>
                 </div>
 
@@ -103,12 +103,13 @@
                     {{ $product->text }}
                 </article>
             </section>
-
+{{--TODO hide if empty--}}
             <!-- Watched products  -->
             <section class="mt-16 xl:mt-24">
                 <h2 class="mb-12 text-lg lg:text-[42px] font-black">Просмотренные товары</h2>
                 <!-- Products list -->
                 <div class="products grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-8 lg:gap-y-10 2xl:gap-y-12">
+                    @each('product.shared.product', $also, 'item')
                 </div>
             </section>
 
