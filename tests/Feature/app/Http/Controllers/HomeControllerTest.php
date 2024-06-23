@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\app\Http\Controllers;
 
 use App\Http\Controllers\HomeController;
-use App\Models\Product;
 use Database\Factories\BrandFactory;
 use Database\Factories\CategoryFactory;
 use Database\Factories\ProductFactory;
-use Domain\Catalog\Models\Brand;
-use Domain\Catalog\Models\Category;
-use Domain\Catalog\ViewModels\CategoryViewModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
