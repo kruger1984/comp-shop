@@ -7,10 +7,12 @@ use Closure;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
-class SeoMiddlewar
+class SeoMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
+
+
         $seo = Cache::rememberForever('seo_' . str($request->getPathInfo())->slug('_'), function () use ($request) {
             return Seo::query()->where('url', $request->getPathInfo())->first() ??false;
         });

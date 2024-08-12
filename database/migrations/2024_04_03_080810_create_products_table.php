@@ -17,13 +17,17 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('thumbnail')->nullable();
             $table->unsignedInteger('price')->default(0);
-            $table->timestamps();
+
 
             $table->foreignIdFor(Brand::class)
                 ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
+
+            $table->unsignedInteger('quantity')->default(0);
+
+            $table->timestamps();
         });
 
         Schema::create('category_product', function (Blueprint $table) {

@@ -7,12 +7,12 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 class SeoUrlCast implements CastsAttributes
 {
 
-    #[\Override] public function get($model, string $key, $value, array $attributes)
+    public function get($model, string $key, $value, array $attributes)
     {
         return $value;
     }
 
-    #[\Override] public function set($model, string $key, $value, array $attributes)
+    public function set($model, string $key, $value, array $attributes)
     {
         return parse_url($value, PHP_URL_PATH) ?? '/';
     }
