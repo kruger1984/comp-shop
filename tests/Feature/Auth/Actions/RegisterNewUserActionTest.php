@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Auth\Actions;
+//namespace Auth\Actions;
+namespace Tests\Feature\Auth\Actions;
 
 use Domain\Auth\Contracts\RegisterNewUserContract;
 use Domain\Auth\DTOs\NewUserDTO;

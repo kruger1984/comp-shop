@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Observers\BrandObserver;
+use App\Observers\CategoryObserver;
+use App\Observers\ProductObserver;
+use Domain\Catalog\Models\Brand;
+use Domain\Catalog\Models\Category;
+use Domain\Product\Models\Product;
 use Illuminate\Foundation\Http\Kernel;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
@@ -44,6 +50,14 @@ class AppServiceProvider extends ServiceProvider
                 }
             );
         }
+
+        /***************
+         * Observers
+         **************/
+
+        Brand::observe(BrandObserver::class);
+        Category::observe(CategoryObserver::class);
+        Product::observe(ProductObserver::class);
 
 
     }

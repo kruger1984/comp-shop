@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
 //            if (app()->bound('sentry')) {
 //                app('sentry')->captureException($e);
-            // TODO Prodaction Activate
+            // TODO Production Activate
         });
 
 //        $this->renderable(function (NotFoundHttpException $e) {

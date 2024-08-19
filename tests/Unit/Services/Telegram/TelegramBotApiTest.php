@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Services\Telegram;
+//namespace Services\Telegram;
+namespace Tests\Unit\Services\Telegram;
+
 
 use Illuminate\Support\Facades\Http;
 use Services\TelegramBotApi;

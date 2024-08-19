@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Auth\DTOs;
+//namespace Auth\DTOs;
+namespace Tests\Feature\Auth\DTOs;
+
 
 use App\Http\Requests\SignUpFormRequest;
 use Domain\Auth\DTOs\NewUserDTO;

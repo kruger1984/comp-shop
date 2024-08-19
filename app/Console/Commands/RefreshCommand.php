@@ -33,11 +33,19 @@ class RefreshCommand extends Command
 
         Cache::flush();
 
-        Storage::deleteDirectory('images/products');
-        Storage::deleteDirectory('images/brands');
+        $storage = Storage::disk('images');
+
+        $storage->deleteDirectory('images/products');
+        $storage->deleteDirectory('images/brands');
 
         $this->call('migrate:fresh',[
             '--seed' => true
+        ]);
+
+        $this->call('moonshine:user', [
+            '--username' => 'add.kononov@gmail.com',
+            '--name' => 'admin',
+            '--password' => '123987',
         ]);
 
 

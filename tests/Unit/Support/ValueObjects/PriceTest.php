@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Support\ValueObjects;
+//namespace Support\ValueObjects;
+namespace Tests\Unit\Support\ValueObjects;
 
+
+use Support\ValueObjects\Price;
 use Tests\TestCase;
+
 
 final class PriceTest extends TestCase
 {
