@@ -15,11 +15,19 @@ final class OrderRegistrar implements RouteRegistrar
 {
     public function map(Registrar $registrar): void
     {
-        Route::middleware('web')->group(function (){
-            Route::get('/order', [OrderController::class, 'index'])
-                 ->name('order');
-            Route::post('/order', [OrderController::class, 'handle'])
-                 ->name('order.handle');
+        Route::middleware(['web'])->group(function (){
+
+            Route::controller(OrderController::class)
+                 ->prefix('order')
+                 ->group(function (){
+                    Route::get('/', 'index')->name('order');
+                    Route::post('/', 'handle')->name('order.handle');
+                    Route::get('/list', 'list')->name('order.list');
+                    Route::get('/success/{order}', 'success')->name('order.success');
+                    Route::get('/{order}', 'show')->name('order.show');
+                    Route::delete('/{order}', 'delete')->name('order.delete');
+
+                });
         });
     }
 }

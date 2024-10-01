@@ -15,10 +15,17 @@ use Illuminate\Database\Eloquent\Model;
 
 final class NewOrderAction
 {
-//    public function __invoke(OrderFormRequest $request)
+
     public function __invoke(OrderDTO $order, OrderCustomerDTO $customer, bool $createAccount): Order
     {
         $registerAction = app(RegisterNewUserContract::class);
+
+        $order = Order::query()->create([
+            'payment_method_id' => $order->payment_method_id,
+            'delivery_type_id'  => $order->delivery_type_id,
+            'amount'            => cart()->amount()
+        ]);
+
 
         if ($createAccount) {
             $registerAction(
@@ -28,13 +35,11 @@ final class NewOrderAction
                     $order->password,
                 )
             );
+            $order->update([
+                 'user_id' => auth()->id(),
+            ]);
         }
-// TODO Разобратся с ошибкой
 
-        return Order::query()->create([
-            // 'user_id' => auth()->id(),
-            'payment_method_id' => $order->payment_method_id,
-            'delivery_type_id'  => $order->delivery_type_id,
-        ]);
+        return $order;
     }
 }

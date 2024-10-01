@@ -18,8 +18,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function register()
     {
-//        Vite::macro('image', fn($asset)=> $this->asset("resources/images/$asset"));
-        //TODO скорее всего лишнее
+
     }
 
     /**

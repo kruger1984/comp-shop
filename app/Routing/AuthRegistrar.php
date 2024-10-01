@@ -17,7 +17,7 @@ final class AuthRegistrar implements RouteRegistrar
 {
     public function map(Registrar $registrar): void
     {
-        Route::middleware('web')->group(function () {
+        Route::middleware(['web'])->group(function () {
             Route::controller(SignInController::class)->group(function () {
                 Route::get('/login', 'page')->name('login');
                 Route::post('/login', 'handle')

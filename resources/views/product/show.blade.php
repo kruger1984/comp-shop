@@ -109,7 +109,7 @@
                     {{ $product->text }}
                 </article>
             </section>
-{{--TODO hide if empty--}}
+                       @if(!is_array($also) && $also->count() !== 0)
             <!-- Watched products  -->
             <section class="mt-16 xl:mt-24">
                 <h2 class="mb-12 text-lg lg:text-[42px] font-black">Просмотренные товары</h2>
@@ -118,6 +118,7 @@
                     @each('product.shared.product', $also, 'item')
                 </div>
             </section>
+            @endif
 
         </div>
     </main>

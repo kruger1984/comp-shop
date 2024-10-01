@@ -14,6 +14,7 @@ final class ProductQueryBuilder extends Builder
     public function homepage(): ProductQueryBuilder
     {
         return $this->where('on_home_page', true)
+            ->where('quantity', '>', 0)
                     ->orderBy('sorting')
                     ->limit(6);
     }

@@ -17,6 +17,7 @@ final class SessionRegenerator
 
         request()->session()->regenerateToken();
 
+
         if(!is_null($callback)){
             $callback();
         }

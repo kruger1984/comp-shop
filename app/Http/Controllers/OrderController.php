@@ -7,6 +7,7 @@ use Domain\Order\Actions\NewOrderAction;
 use Domain\Order\DTOs\OrderCustomerDTO;
 use Domain\Order\DTOs\OrderDTO;
 use Domain\Order\Models\DeliveryType;
+use Domain\Order\Models\Order;
 use Domain\Order\Models\OrderCustomer;
 use Domain\Order\Models\PaymentMethod;
 use Domain\Order\Processes\AssignCustomer;
@@ -21,6 +22,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -45,7 +47,6 @@ class OrderController extends Controller
      */
     public function handle(OrderFormRequest $request, NewOrderAction $action): RedirectResponse
     {
-//        $order = $action($request);
         $order = $action(
             OrderDTO::make(...$request->only(['payment_method_id', 'delivery_type_id', 'password'])),
             OrderCustomerDTO::fromArray($request->get('customer')),
@@ -54,7 +55,7 @@ class OrderController extends Controller
 
         (new OrderProcess($order))->processes([
             new CheckProductQuantities(),
-            new AssignCustomer(request('customer')),
+            new AssignCustomer(OrderCustomerDTO::fromArray(request('customer'))),
             new AssignProducts(),
             new ChangeStateToPending(),
             new DecreaseProductsQuantities(),
@@ -62,7 +63,46 @@ class OrderController extends Controller
         ])->run();
 
         return redirect()
-            ->route('home');
+            ->route('order.show', ['order' => $order]);
+    }
+
+    public function success(Order $order): View
+    {
+        $order->load('orderItems.product','orderItems.optionValues.option');
+        return view('order.success', ['order' => $order]);
+    }
+
+    public function list()
+    {
+        $orders = [];
+
+
+        if(Auth::user()) {
+            $userId = Auth::id();
+            $orders = Order::with(['orderItems.product', 'orderItems.optionValues'])
+                           ->where('user_id', $userId)
+                           ->get();
+        }
+
+      return view('order.list', ['orders' => $orders]);
+    }
+
+    public function show(Order $order): View
+    {
+        $order->load('orderItems.product','orderItems.optionValues.option');
+        return view('order.success', ['order' => $order]);
+    }
+
+    public function delete($id)
+    {
+        $order = Order::find($id);
+
+        if ($order) {
+            $order->delete();
+            return redirect()->back()->with('success', 'Заказ удален успешно.');
+        }
+
+        return redirect()->back()->with('error', 'Заказ не найден.');
     }
 
 

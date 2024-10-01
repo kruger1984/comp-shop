@@ -3,28 +3,32 @@ document.addEventListener('DOMContentLoaded', function() {
 	/**
 	 * Mobile menu
 	 */
-	const burgerMenu = document.querySelector('#burgerMenu');
-	const mobileMenu = document.querySelector('#mobileMenu');
-	const mobileMenuNavLink = mobileMenu.querySelectorAll('nav > a');
-	const closeMobileMenu = document.querySelector('#closeMobileMenu');
+    const mobileMenu = document.querySelector('#mobileMenu');
+    if(mobileMenu){
+        const burgerMenu = document.querySelector('#burgerMenu');
 
-	function toggleMobileMenu() {
-		mobileMenu.classList.toggle('hidden');
-	}
+        const mobileMenuNavLink = mobileMenu.querySelectorAll('nav > a');
+        const closeMobileMenu = document.querySelector('#closeMobileMenu');
 
-	burgerMenu.addEventListener('click', function(event) {
-		toggleMobileMenu();
-	});
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
 
-	closeMobileMenu.addEventListener('click', function(event) {
-		toggleMobileMenu();
-	});
+        burgerMenu.addEventListener('click', function(event) {
+            toggleMobileMenu();
+        });
 
-	mobileMenuNavLink.forEach(function (el) {
-		el.addEventListener('click', function(event) {
-			toggleMobileMenu();
-		});
-	});
+        closeMobileMenu.addEventListener('click', function(event) {
+            toggleMobileMenu();
+        });
+
+        mobileMenuNavLink.forEach(function (el) {
+            el.addEventListener('click', function(event) {
+                toggleMobileMenu();
+            });
+        });
+    }
+
 
 	/**
 	 * Accordion

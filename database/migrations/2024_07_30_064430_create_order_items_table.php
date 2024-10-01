@@ -52,6 +52,7 @@ return new class extends Migration {
     public function down(): void
     {
         if ( ! app()->isProduction) {
+            Schema::dropIfExists('order_item_option_value');
             Schema::dropIfExists('order_items');
         }
     }

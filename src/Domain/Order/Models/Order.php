@@ -5,12 +5,14 @@ namespace Domain\Order\Models;
 use Domain\Auth\Models\User;
 use Domain\Order\Enums\OrderStatuses;
 use Domain\Order\QueryBuilders\OrderQueryBuilder;
+use Domain\Product\QueryBuilders\ProductQueryBuilder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Support\Casts\PriceCast;
 
 
@@ -21,6 +23,7 @@ use Support\Casts\PriceCast;
 class Order extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -69,4 +72,10 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function newEloquentBuilder($query): OrderQueryBuilder
+    {
+        return new OrderQueryBuilder($query);
+    }
+
 }

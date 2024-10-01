@@ -45,14 +45,10 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-//            if (app()->bound('sentry')) {
-//                app('sentry')->captureException($e);
-            // TODO Production Activate
+            if (app()->isProduction() && app()->bound('sentry')) {
+                app('sentry')->captureException($e);
+            }
         });
-
-//        $this->renderable(function (NotFoundHttpException $e) {
-//            return response('123');
-//        });
 
         $this->reportable(function (\DomainException $e){
             flash()->alert($e->getMessage());

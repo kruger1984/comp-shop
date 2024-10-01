@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+{{--    @dump(Auth::user())--}}
     <section>
         <!-- Section heading -->
         <h2 class="text-lg lg:text-[42px] font-black">Наши преимущества</h2>

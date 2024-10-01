@@ -39,10 +39,9 @@ final class OrderProcess
                 ->thenReturn();
         }, function (Order $order) {
             flash()->info('Good # ' . $order->id);
-
             event(new OrderCreated($order));
         }, function (Throwable $e) {
-            throw new DomainException($e->getMessage()); // TODO если локально то getMessage() если нет то строку
+            throw new DomainException(app()->isLocal() ? $e->getMessage() : 'An error occurred. Please try again later.');
         });
     }
 }

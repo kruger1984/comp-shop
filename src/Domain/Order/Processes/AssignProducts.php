@@ -12,7 +12,7 @@ final class AssignProducts implements OrderProcessContract
 
     public function handle(Order $order, $next)
     {
-        $order->orderItems()
+        $orderItems = $order->orderItems()
             ->createMany(
                 cart()->items()->map(function ($item) {
                     return [
@@ -22,6 +22,21 @@ final class AssignProducts implements OrderProcessContract
                     ];
                 })->toArray()
             );
+//        $order->update([
+//            'amount' => cart()->amount()
+//        ]);
+
+        foreach ($orderItems as $orderItem) {
+
+            $cartItem = cart()->items()->firstWhere('product_id', $orderItem->product_id);
+
+            if ($cartItem && isset($cartItem->optionValues)) {
+
+                $optionValueIds = $cartItem->optionValues->pluck('id')->toArray();
+
+                $orderItem->optionValues()->sync($optionValueIds);
+            }
+        }
 
         return $next($order);
     }

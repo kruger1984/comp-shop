@@ -20,6 +20,7 @@ final class CatalogRegistrar implements RouteRegistrar
             Route::get('/catalog/{category:slug?}', CatalogController::class)
                 ->middleware([CatalogViewMiddleware::class])
                  ->name('catalog');
+
         });
     }
 }

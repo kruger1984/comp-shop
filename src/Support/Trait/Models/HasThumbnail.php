@@ -12,6 +12,12 @@ trait HasThumbnail
     public function makeThumbnail(string $size, string $method = 'resize'): string
     {
 
+//        $thumbnailPath = $this->thumbnailDir() . '/' . $size . '/' . File::basename($this->{$this->thumbnailColumn()});
+//
+//        if (File::exists(public_path($thumbnailPath))) {
+//            return asset($thumbnailPath);
+//        }
+
         return route('thumbnail', [
             'size'   => $size,
             'dir'    => $this->thumbnailDir(),

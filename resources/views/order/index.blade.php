@@ -88,7 +88,7 @@
                                         <input name="create_account"
                                                type="checkbox"
                                                id="checkout-create-account"
-                                               value="1"
+                                               value="0"
                                             @checked(old('create_account'))
                                         >
                                         <label for="checkout-create-account" class="form-checkbox-label" @click="createAccount = !createAccount">
