@@ -23,11 +23,11 @@ class SignUpFormRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:1'],
-                'email' => ['required', 'email:dns', 'unique:users'],
-                'password' => ['required', 'confirmed', Password::defaults()],
+            'email' => ['required', 'email:dns', 'unique:users'],
+            'password' => ['required', 'confirmed', Password::defaults()],
         ];
     }
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'email' => str(request('email'))

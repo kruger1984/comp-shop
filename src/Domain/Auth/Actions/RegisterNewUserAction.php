@@ -13,11 +13,14 @@ final class RegisterNewUserAction implements RegisterNewUserContract
 {
 public function __invoke(NewUserDTO $data): void
 {
+    /** @var User $user */
+
     $user = User::query()->create([
         'name' => $data->name,
         'email' => $data->email,
         'password' => bcrypt($data->password),
     ]);
+
 
     event(new Registered($user));
     auth()->login($user);

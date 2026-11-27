@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-	/**
-	 * Mobile menu
-	 */
+    /**
+     * Mobile menu
+     */
     const mobileMenu = document.querySelector('#mobileMenu');
-    if(mobileMenu){
+    if (mobileMenu) {
         const burgerMenu = document.querySelector('#burgerMenu');
 
         const mobileMenuNavLink = mobileMenu.querySelectorAll('nav > a');
@@ -14,54 +14,77 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileMenu.classList.toggle('hidden');
         }
 
-        burgerMenu.addEventListener('click', function(event) {
+        burgerMenu.addEventListener('click', function () {
             toggleMobileMenu();
         });
 
-        closeMobileMenu.addEventListener('click', function(event) {
+        closeMobileMenu.addEventListener('click', function () {
             toggleMobileMenu();
         });
 
         mobileMenuNavLink.forEach(function (el) {
-            el.addEventListener('click', function(event) {
+            el.addEventListener('click', function () {
                 toggleMobileMenu();
             });
         });
     }
 
 
-	/**
-	 * Accordion
-	 */
-	const accordionHeader = document.querySelectorAll('.accordion-header');
+    /**
+     * Accordion
+     */
+    const accordionHeader = document.querySelectorAll('.accordion-header');
 
-	accordionHeader.forEach((header) => {
-		header.addEventListener('click', function () {
-			const accordionContent = header.parentElement.querySelector('.accordion-content');
-			// let accordionMaxHeight = accordionContent.style.maxHeight;
+    accordionHeader.forEach((header) => {
+        header.addEventListener('click', function () {
+            const accordionContent = header.parentElement.querySelector('.accordion-content');
+            // let accordionMaxHeight = accordionContent.style.maxHeight;
 
-			// Condition handling
-			if (accordionContent.classList.contains('hidden')) {
-				accordionContent.classList.remove('hidden');
-				header.classList.add('_is-toggled');
-			} else {
-				accordionContent.classList.add('hidden');
-				header.classList.remove('_is-toggled');
-			}
-		});
-	});
+            // Condition handling
+            if (accordionContent.classList.contains('hidden')) {
+                accordionContent.classList.remove('hidden');
+                header.classList.add('_is-toggled');
+            } else {
+                accordionContent.classList.add('hidden');
+                header.classList.remove('_is-toggled');
+            }
+        });
+    });
 
-	/**
-	 * Anchor smooth scroll
-	 */
-	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-		anchor.addEventListener('click', function (e) {
-			e.preventDefault();
+    /**
+     * Anchor smooth scroll
+     */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
 
-			document.querySelector(this.getAttribute('href')).scrollIntoView({
-				behavior: 'smooth'
-			});
-		});
-	});
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    //
+    // /**
+    //  * Ajax Like add-delete
+    //  */
+    //
+    //     function likeItem() {
+    //     fetch(this.action, {
+    //         method: 'POST',
+    //         headers: {
+    //             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({})
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             if (data.success) {
+    //                 this.liked = !this.liked;
+    //             }
+    //         });
+    // }
+
 
 });

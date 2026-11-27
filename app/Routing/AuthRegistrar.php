@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\Auth\SignUpController;
 use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,13 @@ final class AuthRegistrar implements RouteRegistrar
                 Route::get('/auth/socialite/{driver}', 'redirect')->name('socialite.redirect');
                 Route::get('/auth/socialite/{driver}/callback', 'callback')->name('socialite.callback');
             });
+
+            Route::controller(ProfileController::class)->group(function () {
+                Route::get('/profile', 'index')->name('profile');
+                Route::put('/profile/{user}', 'update')->name('profile.update');
+                Route::post('/profile/{product}/like', 'like')->name('profile.like');
+            });
+
         });
     }
 }

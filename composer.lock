@@ -2402,9 +2402,9 @@
             ],
             "authors": [
                 {
-                    "name": "Danil Shutsky",
-                    "email": "info@cutcode.ru",
-                    "homepage": "https://github.com/lee-to"
+                    "name": "Kononov Alex",
+                    "email": "add.kononov@gmail.com",
+                    "homepage": "https://github.com/kruger1984"
                 }
             ],
             "description": "Package development command",

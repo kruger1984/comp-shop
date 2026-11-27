@@ -15,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
  *
  */
 
-class User extends Authenticatable implements \Illuminate\Contracts\Auth\Authenticatable
+class User extends Authenticatable
 
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -30,6 +30,7 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\Authent
         'github_id',
         'email',
         'password',
+        'likes'
     ];
 
     /**

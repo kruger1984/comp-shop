@@ -3,7 +3,7 @@
         <div class="header-inner flex items-center justify-between lg:justify-start">
             <div class="header-logo shrink-0">
                 <a href="{{ route('home') }}" rel="home">
-                    <img src="{{ Vite::image('logo.svg') }}" class="w-[120px] xs:w-[148px] md:w-[201px] h-[30px] xs:h-[36px] md:h-[50px]" alt="CutCode">
+                    <img src="{{ Vite::image('logo.svg') }}" class="w-[120px] xs:w-[148px] md:w-[201px] h-[30px] xs:h-[36px] md:h-[50px]" alt="CompShop">
                 </a>
             </div><!-- /.header-logo -->
             <div class="header-menu grow hidden lg:flex items-center ml-8 mr-8 gap-8">
@@ -52,7 +52,7 @@
                         <div class="mt-4">
                             <ul class="space-y-2">
                                 <li><a href="{{ route('order.list') }}" class="text-body hover:text-white text-xs font-medium">Мои заказы</a></li>
-                                <li><a href="{{ route('profile.index') }}" class="text-body hover:text-white text-xs font-medium">Редактировать профиль</a></li>
+                                <li><a href="{{ route('profile') }}" class="text-body hover:text-white text-xs font-medium">Редактировать профиль</a></li>
                             </ul>
                         </div>
                         <div class="mt-6">

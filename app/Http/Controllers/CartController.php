@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CartRequest;
 use Domain\Cart\Models\CartItem;
 use Domain\Product\Models\Product;
 use Illuminate\Contracts\Foundation\Application;
@@ -34,14 +35,26 @@ class CartController extends Controller
             ->intended(route('cart'));
     }
 
-    public function quantity(CartItem $item): RedirectResponse
+    public function quantity(CartItem $item, CartRequest $request): RedirectResponse
     {
-        cart()->quantity($item, request('quantity', 1));
+
+        if($request->input('quantity') == 1 && $request->input('action') == '-'){
+            flash()->alert('Минимальное кол-во товара 1');
+            return redirect()->back();
+        }
+
+        if(($request->input('action') == '+') ) {
+            cart()->quantity($item, $request->input('quantity') + 1);
+        }
+        else {
+            cart()->quantity($item, $request->input('quantity') - 1);
+        }
 
         flash()->info('Кол-во товаров изменено');
 
         return redirect()
             ->intended(route('cart'));
+
     }
 
     public function delete(CartItem $item): RedirectResponse

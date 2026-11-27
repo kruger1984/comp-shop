@@ -13,12 +13,12 @@ final class Price implements Stringable
     use Makeable;
 
     private array $currencies = [
-        'RUB' => '₽'
+        'UAH' => '₴'
     ];
 
     public function __construct(
         private readonly int $value,
-        private readonly string $currency = 'RUB',
+        private readonly string $currency = 'UAH',
         private readonly int $precision = 100
 
     )
